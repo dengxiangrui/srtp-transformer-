@@ -1,0 +1,182 @@
+<view class="container">
+  <view class="header">
+    <view class="logo-area">
+      <view class="logo">诗</view>
+      <view class="brand">
+        <text class="title">AI诗词创作</text>
+        <text class="subtitle">以此心境，以此为题...</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="search-section">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="以此心境，以此为题..." 
+        value="{{inputText}}"
+        bindinput="onInput"
+        confirm-type="done"
+      />
+    </view>
+    <button 
+      class="create-btn" 
+      bindtap="generatePoem"
+      disabled="{{isGenerating || !inputText}}"
+    >
+      <text>{{isGenerating ? '创作中...' : '开始创作'}}</text>
+    </button>
+  </view>
+
+  <view class="tags-section">
+    <text class="section-title">热门主题</text>
+    <view class="tags-list">
+      <text 
+        wx:for="{{hotTags}}" 
+        wx:key="index" 
+        class="hot-tag"
+        bindtap="selectHotTag"
+        data-tag="{{item}}"
+      >{{item}}</text>
+    </view>
+  </view>
+
+  <view class="options-section">
+    <view class="option-row">
+      <text class="option-label">诗词类型</text>
+      <view class="option-list">
+        <text 
+          wx:for="{{poemTypes}}" 
+          wx:key="index"
+          class="option-item {{selectedType === item ? 'active' : ''}}"
+          bindtap="selectType"
+          data-type="{{item}}"
+        >{{item}}</text>
+      </view>
+    </view>
+
+    <view class="option-row">
+      <text class="option-label">风格模仿</text>
+      <view class="option-list">
+        <text 
+          wx:for="{{styles}}" 
+          wx:key="index"
+          class="option-item {{selectedStyle === item ? 'active' : ''}}"
+          bindtap="selectStyle"
+          data-style="{{item}}"
+        >{{item}}</text>
+      </view>
+    </view>
+
+    <view class="option-row">
+      <text class="option-label">情感基调</text>
+      <view class="option-list">
+        <text 
+          wx:for="{{emotions}}" 
+          wx:key="index"
+          class="option-item {{selectedEmotion === item ? 'active' : ''}}"
+          bindtap="selectEmotion"
+          data-emotion="{{item}}"
+        >{{item}}</text>
+      </view>
+    </view>
+
+    <view class="acrostic-row">
+      <text class="acrostic-label">藏头诗模式</text>
+      <switch 
+        class="acrostic-switch" 
+        checked="{{isAcrostic}}" 
+        bindchange="toggleAcrostic"
+      />
+    </view>
+  </view>
+
+  <view class="result-section" wx:if="{{poemData}}">
+    <view class="result-card">
+      <view class="poem-header">
+        <text class="poem-title">{{poemData.title}}</text>
+        <view class="poem-meta">
+          <text class="meta-item">{{poemData.type}}</text>
+          <text wx:if="{{poemData.style}}" class="meta-dot">·</text>
+          <text wx:if="{{poemData.style}}" class="meta-item">{{poemData.style}}</text>
+        </view>
+      </view>
+      
+      <view class="poem-content">
+        <text 
+          wx:for="{{poemData.content}}" 
+          wx:key="index" 
+          class="poem-line"
+        >{{item}}</text>
+      </view>
+
+      <view class="poem-tags">
+        <text class="tag">#{{poemData.theme}}</text>
+        <text wx:if="{{poemData.emotion}}" class="tag">#{{poemData.emotion}}</text>
+      </view>
+    </view>
+
+    <view class="action-row">
+      <view class="action-item" bindtap="analyzePoem">
+        <text class="action-icon">📖</text>
+        <text class="action-text">鉴赏</text>
+      </view>
+      <view class="action-item" bindtap="copyPoem">
+        <text class="action-icon">📋</text>
+        <text class="action-text">复制</text>
+      </view>
+    </view>
+
+    <view class="analysis-card" wx:if="{{analysis}}">
+      <view class="analysis-header">
+        <text class="analysis-title">诗词鉴赏</text>
+        <view class="close-btn" bindtap="closeAnalysis">×</view>
+      </view>
+      <view class="analysis-content">
+        <text>{{analysis}}</text>
+      </view>
+    </view>
+
+    <view class="polish-section">
+      <view class="polish-input-row">
+        <input 
+          class="polish-input"
+          placeholder="不满意？告诉我哪里需要修改..."
+          value="{{polishInput}}"
+          bindinput="onPolishInput"
+        />
+        <button class="polish-btn" bindtap="polishPoem">修改</button>
+      </view>
+      <view class="quick-polish">
+        <text 
+          wx:for="{{quickPolishOptions}}" 
+          wx:key="index"
+          class="quick-polish-item"
+          bindtap="quickPolish"
+          data-option="{{item}}"
+        >{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="history-section" wx:if="{{historyList.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">历史创作</text>
+      <text class="clear-btn" bindtap="clearHistory">清空</text>
+    </view>
+    <view class="history-list">
+      <view 
+        wx:for="{{historyList}}" 
+        wx:key="index" 
+        class="history-item"
+        bindtap="showHistoryPoem"
+        data-index="{{index}}"
+      >
+        <text class="history-title">{{item.title}}</text>
+        <text class="history-theme">{{item.theme}}</text>
+      </view>
+    </view>
+  </view>
+
+</view>
