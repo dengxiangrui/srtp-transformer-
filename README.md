@@ -52,20 +52,21 @@
 
 ```text
 srtp-transformer-/
-├── pages/
-│   └── index/                    # 首页（主要交互界面）
-│       ├── index.js              # 页面逻辑 (API调用、状态管理)
-│       ├── index.json            # 页面配置
-│       ├── index.wxml            # 页面结构
-│       └── index.wxss            # 页面样式
-├── utils/
-│   ├── api.js                    # API 接口封装 (包含 Key 配置)
-│   └── config.js                 # 全局配置文件
-├── app.js                        # 小程序入口逻辑
-├── app.json                      # 小程序全局配置
-├── app.wxss                      # 全局样式
-├── project.config.json           # 开发者工具配置
-├── project.private.config.json   # 私有开发者工具配置
-├── sitemap.json                  # 索引配置
-├── srtp.png                      # 微信小程序界面截图
-└── README.md                     # 项目说明文档
+├── transformer/
+|   ├── pages/
+│       └── index/                    # 首页（主要交互界面）
+│           ├── index.js              # 页面逻辑 (API调用、状态管理)
+│           ├── index.json            # 页面配置
+│           ├── index.wxml            # 页面结构
+│           └── index.wxss            # 页面样式
+|   ├── utils/
+│       ├── api.js                    # API 接口封装 (包含 Key 配置)
+│       └── config.js                 # 全局配置文件
+|   ├── app.js                        # 小程序入口逻辑
+|   ├── app.json                      # 小程序全局配置
+|   ├── app.wxss                      # 全局样式
+|   ├── project.config.json           # 开发者工具配置
+|   ├── project.private.config.json   # 私有开发者工具配置
+|   ├── sitemap.json                  # 索引配置
+├── srtp.png                          # 微信小程序界面截图
+└── README.md                         # 项目说明文档
